@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Ideias AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="model-select-container">
+             <div style="display: flex; align-items: center;">
+                <select id="model-select">
+                    <option value="gemini-2.0-flash" selected>Gemini 2.0 Flash</option>
+                    <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash (Experimental)</option>
+                    </select>
+                 <div class="info-icon-container">
+                    <span class="info-icon"><i class="fas fa-info-circle"></i></span>
+                    <div class="tooltip"></div>
+                </div>
+             </div>
+        </div>
+        <img src="{{ url_for('static', filename='images/nutri-ideias-ai-logo.png') }}" alt="Logo NutriIdeias AI">
+        <p>Insira suas preferências alimentares, ingredientes disponíveis ou descreva um prato para obter ideias de refeições ou uma análise aproximada.</p>
+
+        <form id="nutri-form">
+            <textarea id="user-input" placeholder="Ideias de café da manhã rico em proteína; Quantas calorias possuem em um prato com 70g de arroz e 100g de frango?"></textarea>
+            <button type="submit">Gerar Ideias / Analisar</button>
+        </form>
+
+        <div id="result-area"></div>
+
+        <div class="warning">
+            <p>
+                ***AVISO IMPORTANTE: As informações nutricionais fornecidas são apenas estimativas aproximadas geradas por IA. Não é um cálculo preciso de uma base de dados nutricional auditada.
+                <br><br>
+                Para valores nutricionais exatos e aconselhamento dietético personalizado, consulte uma base de dados nutricional oficial ou um profissional de saúde/nutricionista qualificado.***
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
