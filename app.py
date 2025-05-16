@@ -2,6 +2,7 @@ import os
 import google.generativeai as genai
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
+from langdetect import detect, LangDetectException # Importa a biblioteca de detecção de idioma
 
 # Carrega as variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -21,6 +22,35 @@ AVAILABLE_MODELS = {
 
 app = Flask(__name__)
 
+# Palavras-chave para uma verificação básica de tópico de nutrição (em português e inglês)
+NUTRITION_KEYWORDS = [
+    'refeição', 'refeições', 'café da manhã', 'almoço', 'jantar', 'lanche',
+    'nutrição', 'nutricional', 'dieta', 'calorias', 'caloria', 'kcal', 'gordura',
+    'proteína', 'carboidrato', 'vitaminas', 'minerais', 'ingredientes', 'prato',
+    'receita', 'comer', 'alimentos', 'saudável', 'balanceado', 'peso', 'emagrecer',
+    'engordar', 'food', 'meal', 'meals', 'breakfast', 'lunch', 'dinner', 'snack',
+    'nutrition', 'nutritional', 'diet', 'calories', 'calorie', 'fat', 'protein',
+    'carbohydrate', 'vitamins', 'minerals', 'ingredients', 'dish', 'recipe',
+    'eat', 'foods', 'healthy', 'balanced', 'weight', 'lose weight', 'gain weight',
+    'vegetariano', 'vegano', 'vegetables', 'vegan', 'vegetarian', 'frutas', 'fruits',
+    'vegetais', 'legumes', 'grãos', 'cereais', 'dairy', 'laticínios', 'açúcar', 'sugar',
+    'sal', 'salt', 'fibras', 'fibra', 'fiber', 'hidratação', 'hydration', 'água', 'water',
+    'suplementos', 'supplements', 'alergia', 'alergias', 'allergy', 'allergies', 'intolerância',
+    'intolerance', 'doença celíaca', 'celiac disease', 'diabetes', 'colesterol', 'cholesterol',
+    'hipertensão', 'hypertension', 'coração', 'heart', 'digestão', 'digestion', 'metabolismo',
+    'metabolism', 'energia', 'energy', 'desempenho', 'performance', 'recuperação', 'recovery',
+    'musculação', 'bodybuilding', 'exercício', 'exercise', 'treino', 'training', 'pré-treino',
+    'pós-treino', 'pre-workout', 'post-workout', 'jejum', 'fasting', 'orgânico', 'organic',
+    'processado', 'processed', 'natural', 'artificial', 'gosto', 'sabor', 'taste', 'flavor',
+    'preparar', 'cozinhar', 'prepare', 'cook', 'cozinha', 'kitchen', 'ingrediente', 'ingredient'
+]
+
+# Mensagens de recusa para tópicos fora de nutrição (em português e inglês)
+OFF_TOPIC_RESPONSES = {
+    'pt': "Desculpe, sou um assistente de nutrição e meu foco é gerar ideias de refeições e análises nutricionais. Não posso ajudar com este tópico.",
+    'en': "Sorry, I am a nutrition assistant and my focus is on generating meal ideas and nutritional analyses. I cannot help with this topic."
+}
+
 # Rota principal que renderiza o arquivo HTML
 @app.route('/')
 def index():
@@ -39,6 +69,28 @@ def generate_content():
         if not user_input:
             return jsonify({"error": "Nenhum texto de entrada fornecido."}), 400
 
+        # Detecção de Idioma e Filtragem de Tópico - início
+        detected_lang = 'pt'
+        try:
+            # Tenta detetar o idioma da entrada do utilizador
+            detected_lang = detect(user_input)
+            # Verifica se o idioma detetado é suportado para as mensagens de recusa
+            if detected_lang not in OFF_TOPIC_RESPONSES:
+                 detected_lang = 'pt' # Volta para português se o idioma não for suportado
+        except LangDetectException:
+            # Se a deteção falhar (ex: texto muito curto), usa o idioma padrão
+            detected_lang = 'pt'
+
+        # Verifica se a entrada contém palavras-chave de nutrição
+        # Esta é uma verificação simples e pode não ser perfeita
+        is_nutrition_related = any(word in user_input.lower() for word in NUTRITION_KEYWORDS)
+
+        # Se a entrada não parecer relacionada a nutrição, retorna a mensagem de recusa
+        if not is_nutrition_related:
+            # Retorna a mensagem de recusa no idioma detetado
+            return jsonify({"result": OFF_TOPIC_RESPONSES.get(detected_lang, OFF_TOPIC_RESPONSES['pt'])}) # Usa get com fallback para inglês
+        # Detecção de Idioma e Filtragem de Tópico - fim
+
         # Valida se o modelo selecionado é válido e inicializa o modelo
         if model_name not in AVAILABLE_MODELS:
              return jsonify({"error": f"Modelo '{model_name}' não é válido ou não está disponível."}), 400
@@ -48,18 +100,35 @@ def generate_content():
             model = genai.GenerativeModel(model_name)
 
             # --- Prompt ---
-            prompt = """
-            Você é um assistente de nutrição focado em dar ideias de refeições e análises gerais.
-            Gere sugestões criativas de refeições ou analise o prato descrito com base na entrada do utilizador.
-            Apresente as sugestões de forma clara, com nomes de pratos e uma breve descrição.
-            **Use formatação Markdown** para destacar informações importantes, como:
-            - Nomes de pratos em **negrito**.
-            - Listas para organizar itens ou pontos.
-            - Use itálico (*texto*) para notas adicionais.
+            # prompt = """
+            # Você é um assistente de nutrição focado em dar ideias de refeições e análises gerais.
+            # Gere sugestões criativas de refeições ou analise o prato descrito com base na entrada do utilizador.
+            # Apresente as sugestões de forma clara, com nomes de pratos e uma breve descrição.
+            # **Use formatação Markdown** para destacar informações importantes, como:
+            # - Nomes de pratos em **negrito**.
+            # - Listas para organizar itens ou pontos.
+            # - Use itálico (*texto*) para notas adicionais.
 
-            Se o utilizador descrever um prato com quantidades, forneça uma **estimativa muito aproximada** das calorias e um comentário sobre o balanço nutricional geral. **Formate a estimativa de calorias em negrito.**
-            Mas na resposta não precisa me dizer que está a utilizar formatação em Markdown ou que está respeitando o meu pedido. Simplesmente dê a resposta para a pergunta recebida.
-            **IMPORTANTE: Responda também no idioma que receber a pergunta, ou seja, se reecber em inglês, responda em inglês, se receber em português, responda em português. Você é capaz de identificar o idioma e traduzir a resposta.**
+            # Se o utilizador descrever um prato com quantidades, forneça uma **estimativa muito aproximada** das calorias e um comentário sobre o balanço nutricional geral. **Formate a estimativa de calorias em negrito.**
+            # **IMPORTANTE: 
+            # - Não precisa dizer que está a utilizar formatação em Markdown ou que está respeitando o meu pedido. Simplesmente dê a resposta para a pergunta recebida.
+            # - Responda também no idioma que receber a pergunta, ou seja, se reecber em inglês, responda em inglês, se receber em português, responda em português. Você é capaz de identificar o idioma e traduzir a resposta.
+            # - Se o utilizador descrever algo que não seja relacionado com o seu propósito que é ser um assistente de nutrição com foco em dar ideias de refeições e análises gerais, responda gentilmente que não pode ajudar.**
+            # """
+
+            prompt = """
+            You are a nutrition assistant focused on providing meal ideas and general analyses.
+            Based on the user's input, generate creative meal suggestions or analyze the described dish.
+
+            Present suggestions clearly, with dish names and a brief description.
+            **Use Markdown formatting** for nutrition-related responses, such as:
+            - Dish names in **bold**.
+            - Lists to organize items or points.
+            - Use italics (*text*) for additional notes.
+
+            If the user describes a dish with quantities, provide a **very approximate estimate** of calories and a comment on the overall nutritional balance. **Format the calorie estimate in bold.**
+
+            Do NOT mention that you are using Markdown or following instructions. Just provide the direct response.
             """
 
             # Gera o conteúdo usando o modelo Gemini com a estrutura de mensagens
