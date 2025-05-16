@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
-from langdetect import detect, LangDetectException # Importa a biblioteca de detecção de idioma
+from langdetect import detect, LangDetectException
 
 # Carrega as variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -69,7 +69,7 @@ def generate_content():
         if not user_input:
             return jsonify({"error": "Nenhum texto de entrada fornecido."}), 400
 
-        # Detecção de Idioma e Filtragem de Tópico - início
+        # Detecção de idioma e filtragem das keywords
         detected_lang = 'pt'
         try:
             # Tenta detetar o idioma da entrada do utilizador
@@ -89,7 +89,6 @@ def generate_content():
         if not is_nutrition_related:
             # Retorna a mensagem de recusa no idioma detetado
             return jsonify({"result": OFF_TOPIC_RESPONSES.get(detected_lang, OFF_TOPIC_RESPONSES['pt'])}) # Usa get com fallback para inglês
-        # Detecção de Idioma e Filtragem de Tópico - fim
 
         # Valida se o modelo selecionado é válido e inicializa o modelo
         if model_name not in AVAILABLE_MODELS:
@@ -100,22 +99,6 @@ def generate_content():
             model = genai.GenerativeModel(model_name)
 
             # --- Prompt ---
-            # prompt = """
-            # Você é um assistente de nutrição focado em dar ideias de refeições e análises gerais.
-            # Gere sugestões criativas de refeições ou analise o prato descrito com base na entrada do utilizador.
-            # Apresente as sugestões de forma clara, com nomes de pratos e uma breve descrição.
-            # **Use formatação Markdown** para destacar informações importantes, como:
-            # - Nomes de pratos em **negrito**.
-            # - Listas para organizar itens ou pontos.
-            # - Use itálico (*texto*) para notas adicionais.
-
-            # Se o utilizador descrever um prato com quantidades, forneça uma **estimativa muito aproximada** das calorias e um comentário sobre o balanço nutricional geral. **Formate a estimativa de calorias em negrito.**
-            # **IMPORTANTE: 
-            # - Não precisa dizer que está a utilizar formatação em Markdown ou que está respeitando o meu pedido. Simplesmente dê a resposta para a pergunta recebida.
-            # - Responda também no idioma que receber a pergunta, ou seja, se reecber em inglês, responda em inglês, se receber em português, responda em português. Você é capaz de identificar o idioma e traduzir a resposta.
-            # - Se o utilizador descrever algo que não seja relacionado com o seu propósito que é ser um assistente de nutrição com foco em dar ideias de refeições e análises gerais, responda gentilmente que não pode ajudar.**
-            # """
-
             prompt = """
             You are a nutrition assistant focused on providing meal ideas and general analyses.
             Based on the user's input, generate creative meal suggestions or analyze the described dish.
