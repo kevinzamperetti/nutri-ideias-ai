@@ -10,16 +10,18 @@
 <body>
     <div class="container">
         <div class="model-select-container">
-             <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;">
                 <select id="model-select">
                     <option value="gemini-2.0-flash" selected>Gemini 2.0 Flash</option>
                     <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash (Experimental)</option>
-                    </select>
-                 <div class="info-icon-container">
-                    <span class="info-icon"><i class="fas fa-info-circle"></i></span>
+                </select>
+                <div class="info-icon-container">
+                    <span class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>
+                    </span>
                     <div class="tooltip"></div>
                 </div>
-             </div>
+            </div>
         </div>
         <img src="{{ url_for('static', filename='images/nutri-ideias-ai-logo.png') }}" alt="Logo NutriIdeias AI">
         <p>Insira suas preferências alimentares, ingredientes disponíveis ou descreva um prato para obter ideias de refeições ou uma análise aproximada.</p>
@@ -45,12 +47,12 @@
     </button>
 
     <div class="chatbot-wrapper" id="chatbot-wrapper">
-         <div class="chatbot-header">
-             <h3>Chat Nutricional</h3>
-             <button class="close-chat-button" id="close-chat-button-header">
-                 <i class="fas fa-times"></i>
-             </button>
-         </div>
+        <div class="chatbot-header">
+            <h3>Chat Nutricional</h3>
+            <button class="close-chat-button" id="close-chat-button-header">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
         <div class="chatbot-section">
             <div class="chat-container">
                 <div class="chat-box" id="chat-box">

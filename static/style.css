@@ -64,18 +64,14 @@ body {
     cursor: pointer; /* Indica que é interativo */
 }
 
-.info-icon {
-    font-weight: bold; /* Pode remover se o ícone já tiver peso */
-    color: #5cb85c; /* Cor verde */
-    font-size: 0.9rem;
-    margin-left: 5px; /* Espaço à esquerda do ícone */
+.info-icon-container svg {
+    display: inline-block;
+    vertical-align: middle; /* Alinha verticalmente com o texto/select */
+    width: 0.9rem; /* Tamanho do ícone */
+    height: 0.9rem; /* Tamanho do ícone */
+    fill: #5cb85c; /* Cor verde */
+    margin-left: 5px; /* Espaço à esquerda */
 }
-
- /* Estilo específico para o ícone Font Awesome */
-.info-icon i {
-    font-weight: normal; /* Garante que o ícone não fique em negrito se a classe pai tiver font-weight: bold */
-}
-
 
 .tooltip {
     visibility: hidden; /* Oculta o tooltip por padrão */
@@ -87,13 +83,13 @@ body {
     position: absolute;
     z-index: 1;
     bottom: 50%; /* Posiciona o tooltip 50% acima do ponto de referência */
-    left: 50%; /* Posiciona o ponto de referência no centro */
-    transform: translateX(-50%); /* Centraliza o tooltip horizontalmente */
+    left: 100%; /* Posiciona o ponto de referência no centro */
     opacity: 0;
     transition: opacity 0.3s ease; /* Efeito de fade */
     font-size: 0.8rem; /* Tamanho da fonte menor */
     white-space: nowrap; /* Tenta manter o texto numa única linha */
-    max-width: 300px; /* Define uma largura máxima para evitar tooltips excessivamente longos */
+    width: auto;
+    max-width: 375px; /* Define uma largura máxima para evitar tooltips excessivamente longos */
     box-sizing: border-box; /* Inclui padding e border na largura/altura */
 }
 
@@ -141,7 +137,7 @@ button:hover {
 #result-area {
     margin-top: 20px;
     padding: 20px;
-    background-color: #e9e9e9;
+    background-color: #e9e9eb;
     border-radius: 4px;
     word-wrap: break-word;
     text-align: left;
@@ -233,7 +229,6 @@ button:hover {
     z-index: 99; /* Abaixo dos botões flutuantes, mas acima do conteúdo */
     display: flex; /* Usa flexbox para o layout interno (header + chat) */
     flex-direction: column;
-    overflow: hidden; /* Mantido overflow hidden para o conteúdo da janela do chat */
 
 
     /* Posicionamento flexível */
@@ -311,7 +306,7 @@ button:hover {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: hidden; /* Keep overflow hidden for the chat messages area */
+    flex-basis: 0;
 }
 
 /* Ajuste para o chat-container dentro do wrapper */
@@ -319,9 +314,11 @@ button:hover {
     border: none;
     border-radius: 0;
     flex-grow: 1;
-    height: auto;
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    flex-basis: 0;
 }
 
 
@@ -332,6 +329,8 @@ button:hover {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
 }
 
 .message {
@@ -340,6 +339,7 @@ button:hover {
     border-radius: 5px;
     max-width: 80%;
     word-wrap: break-word;
+    box-sizing: border-box;
 }
 
 .user-message {
@@ -360,6 +360,7 @@ button:hover {
     border-top: 1px solid #ccc;
     background-color: #fff;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .chat-input-area input[type="text"] {
@@ -370,6 +371,7 @@ button:hover {
     margin-right: 10px;
     font-size: 0.9rem;
     font-family: sans-serif;
+    box-sizing: border-box;
 }
 
 .chat-input-area button {
@@ -379,6 +381,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .chat-input-area button i {
@@ -436,7 +439,6 @@ button:hover {
         bottom: auto;
         top: 100%;
         left: 50%;
-        transform: translateX(-50%);
         white-space: normal;
         max-width: 90%;
         width: auto;
@@ -476,14 +478,14 @@ button:hover {
     .chatbot-wrapper {
         /* Posicionamento e altura ajustados para mobile/notebooks */
         bottom: 70px; /* Posição acima do botão flutuante */
-        top: auto; /* Deixa a altura ser determinada pelo max-height e bottom */
         right: 10px; /* Distância da direita */
         left: 10px; /* Distância da esquerda */
         width: auto; /* Largura automática para ocupar o espaço entre left e right */
-        height: auto; /* Altura automática */
-        /* Ajustado max-height para deixar espaço no topo */
-        max-height: calc(100vh - 80px); /* Limita a altura (100vh - bottom - um pouco de margem no topo) */
         transform: translateY(20px);
+        top: 10px;
+        height: calc(100vh - 80px); /* Define a altura para ocupar a maior parte da tela (100vh - bottom - top) */
+        max-height: none;
+        /* ---------------------------------------------------------- */
     }
 
     .chatbot-wrapper.is-visible {
@@ -494,33 +496,40 @@ button:hover {
         display: flex;
     }
 
-    /* Ajuste para o chat-container dentro do wrapper */
     .chat-container {
-        height: auto;
+        /* height: 100%; */
+        min-height: 0;
+        flex-basis: 0;
     }
 
     .chat-box {
         padding: 10px;
         /* Adicionado padding-top para compensar a falta do header */
         padding-top: 15px;
+        box-sizing: border-box;
+        background-color: #f9f9f9;
     }
 
     .message {
         max-width: 90%;
+        box-sizing: border-box;
     }
 
     .chat-input-area {
         padding: 8px;
+        box-sizing: border-box;
     }
 
     .chat-input-area input[type="text"] {
         margin-right: 8px;
         font-size: 0.85rem;
         padding: 6px;
+        box-sizing: border-box;
     }
 
     .chat-input-area button {
         padding: 6px 10px;
         font-size: 0.9rem;
+        box-sizing: border-box;
     }
 }
