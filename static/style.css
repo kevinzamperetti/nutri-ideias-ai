@@ -1,3 +1,4 @@
+/* Estilo básico para o body */
 body {
     font-family: sans-serif;
     display: flex;
@@ -7,97 +8,104 @@ body {
     background-color: #f4f4f4;
     color: #333;
     position: relative;
+    /* Adicionado padding extra no fundo para o botão flutuante */
+    padding-bottom: 80px;
 }
 
 .container {
     background-color: #fff;
-    padding: 30px;
+    padding: 30px; /* Padding padrão */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 700px;
     margin-bottom: 20px;
-    text-align: center;
-    position: relative;
-    padding-top: 50px;
+    text-align: center; /* Centraliza o conteúdo dentro do container, incluindo a imagem */
+    position: relative; /* Permite posicionar elementos filhos em relação a este container */
+    padding-top: 50px; /* Adiciona espaço no topo para o seletor de modelo */
+    box-sizing: border-box; /* Inclui padding e border na largura/altura */
 }
 
+/* Estilo para a imagem do logo */
 .container img {
-    max-width: 270px;
-    height: auto;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 270px; /* Define uma largura máxima menor (ajuste este valor conforme necessário) */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom: 20px; /* Espaço abaixo da imagem */
+    display: block; /* Garante que a imagem se comporte como um bloco para centralizar */
+    margin-left: auto; /* Centraliza a imagem horizontalmente */
+    margin-right: auto; /* Centraliza a imagem horizontalmente */
 }
 
+/* Estilos para o seletor de modelo e info icon */
 .model-select-container {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    z-index: 10;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    flex-direction: column;
-    text-align: left;
+    position: absolute; /* Posiciona o container absolutamente */
+    top: 20px; /* Distância do topo */
+    left: 30px; /* Distância da esquerda */
+    z-index: 10; /* Garante que fique por cima de outros elementos */
+    display: flex; /* Usa flexbox para alinhar o select e o ícone */
+    align-items: flex-start; /* Alinha verticalmente os itens ao topo */
+    gap: 10px; /* Espaço entre o select e o ícone */
+    flex-direction: column; /* Empilha os itens verticalmente */
+    text-align: left; /* Alinha o texto do seletor e descrição à esquerda */
 }
 
 .model-select-container select {
     padding: 2px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    min-width: 125px;
+    min-width: 125px; /* Largura mínima para o select */
     font-family: sans-serif;
     font-size: 0.8rem;
 }
 
-.model-info {
-    font-size: 0.65rem;
-    color: #555;
-    max-width: 400px;
-}
-
-
 .info-icon-container {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+    position: relative; /* Necessário para posicionar o tooltip */
+    display: inline-block; /* Permite que o container do ícone se ajuste ao conteúdo */
+    cursor: pointer; /* Indica que é interativo */
 }
 
 .info-icon {
-    font-weight: bold;
-    color: #5cb85c;
+    font-weight: bold; /* Pode remover se o ícone já tiver peso */
+    color: #5cb85c; /* Cor verde */
     font-size: 0.9rem;
-    margin-left: 5px;
+    margin-left: 5px; /* Espaço à esquerda do ícone */
 }
 
+ /* Estilo específico para o ícone Font Awesome */
+.info-icon i {
+    font-weight: normal; /* Garante que o ícone não fique em negrito se a classe pai tiver font-weight: bold */
+}
+
+
 .tooltip {
-    visibility: hidden;
-    width: 300px;
-    background-color: #5cb85c;
-    color: #000;
-    text-align: center;
+    visibility: hidden; /* Oculta o tooltip por padrão */
+    background-color: #5cb85c; /* Cor de fundo verde */
+    color: #000; /* Cor do texto preto */
+    text-align: left; /* Alinha o texto do tooltip à esquerda */
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 10px; /* Ajusta padding */
     position: absolute;
     z-index: 1;
-    bottom: 0%; /* Posiciona o tooltip acima do ícone */
-    left: 100%;
+    bottom: 50%; /* Posiciona o tooltip 50% acima do ponto de referência */
+    left: 50%; /* Posiciona o ponto de referência no centro */
+    transform: translateX(-50%); /* Centraliza o tooltip horizontalmente */
     opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 0.8rem;
-    text-align: left;
-    padding: 10px;
+    transition: opacity 0.3s ease; /* Efeito de fade */
+    font-size: 0.8rem; /* Tamanho da fonte menor */
+    white-space: nowrap; /* Tenta manter o texto numa única linha */
+    max-width: 300px; /* Define uma largura máxima para evitar tooltips excessivamente longos */
+    box-sizing: border-box; /* Inclui padding e border na largura/altura */
 }
 
 .info-icon-container:hover .tooltip {
-    visibility: visible;
+    visibility: visible; /* Mostra o tooltip ao passar o mouse */
     opacity: 1;
 }
+/* FIM dos Estilos para o seletor de modelo e info icon */
 
-h1 {
-    color: #5cb85c;
+
+h1 { /* Este estilo pode ser removido se não for mais usado, mas mantido por precaução */
+    color: #5cb85c; /* Verde */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -112,13 +120,14 @@ textarea {
     font-size: 0.9rem;
     font-family: sans-serif;
     box-sizing: border-box;
+    padding: 10px; /* Adicionado padding */
 }
 
 button {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #5cb85c;
+    background-color: #5cb85c; /* Verde */
     color: white;
     border: none;
     border-radius: 4px;
@@ -127,7 +136,7 @@ button {
     transition: background-color 0.3s ease;
 }
 button:hover {
-    background-color: #4cae4c;
+    background-color: #4cae4c; /* Verde mais escuro ao passar o mouse */
 }
 #result-area {
     margin-top: 20px;
@@ -136,6 +145,7 @@ button:hover {
     border-radius: 4px;
     word-wrap: break-word;
     text-align: left;
+    box-sizing: border-box; /* Inclui padding e border na largura/altura */
 }
 
 /* Regras CSS para reduzir o espaçamento dentro da área de resultado */
@@ -171,7 +181,7 @@ button:hover {
 .warning p {
     margin-top: 20px;
     padding: 15px;
-    background-color: #f0ad4e;
+    background-color: #f0ad4e; /* Laranja */
     color: #333;
     border-radius: 4px;
     font-weight: bold;
@@ -179,11 +189,211 @@ button:hover {
     font-size: 0.88rem;
 }
 
+/* *** Estilos para o Botão Flutuante (Base para abrir e fechar) *** */
+.floating-chat-button {
+    position: fixed; /* Posição fixa na viewport */
+    bottom: 20px; /* Distância do fundo */
+    right: 20px; /* Distância da direita */
+    width: 60px; /* Largura do botão */
+    height: 60px; /* Altura do botão */
+    background-color: #5cb85c; /* Cor de fundo verde */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Torna o botão redondo */
+    font-size: 1.5rem; /* Tamanho do ícone */
+    display: flex; /* Usa flexbox para centralizar o ícone */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    z-index: 100; /* Garante que fique por cima de outros elementos */
+    transition: background-color 0.3s ease;
+}
 
-/* *** Media Query para ecrãs pequenos (smartphones) *** */
-@media (max-width: 600px) {
+.floating-chat-button:hover {
+    background-color: #4cae4c; /* Verde mais escuro ao passar o mouse */
+}
+
+/* Estilo específico para o botão flutuante de fechar (inicialmente escondido) */
+#floating-close-button {
+    display: none; /* Escondido por padrão */
+    /* As outras propriedades de .floating-chat-button já aplicam o posicionamento e aparência */
+}
+/* *** FIM: Estilos para os Botões Flutuantes *** */
+
+
+/* *** Estilos para o Wrapper do Chatbot *** */
+.chatbot-wrapper {
+    position: fixed; /* Posição fixa na viewport */
+    width: 350px; /* Largura do chat box */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 99; /* Abaixo dos botões flutuantes, mas acima do conteúdo */
+    display: flex; /* Usa flexbox para o layout interno (header + chat) */
+    flex-direction: column;
+    overflow: hidden; /* Mantido overflow hidden para o conteúdo da janela do chat */
+
+
+    /* Posicionamento flexível */
+    top: 20px; /* Distância do topo */
+    bottom: 90px; /* Distância do fundo (acima do botão) */
+    right: 20px; /* Distância da direita */
+    left: auto; /* Garante que não está fixo à esquerda por padrão */
+    height: auto; /* Permite que a altura seja determinada pelo conteúdo flexível */
+    max-height: calc(100vh - 110px); /* Limita a altura máxima (100vh - 20px top - 90px bottom) */
+
+
+    /* Inicialmente escondido */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(20px); /* Começa ligeiramente abaixo para o efeito */
+    transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Estilo para quando o chatbot wrapper está visível */
+.chatbot-wrapper.is-visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0); /* Move para a posição final */
+}
+
+.chatbot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #5cb85c; /* Cor de fundo verde */
+    color: white; /* Cor do texto no cabeçalho */
+    border-bottom: 1px solid #4cae4c;
+    z-index: 1;
+    flex-shrink: 0;
+    min-height: 40px;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    color: white; /* Cor do título no header */
+    font-size: 1.1rem;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Estilos para o botão de fechar DENTRO do cabeçalho */
+#close-chat-button-header {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s ease;
+    z-index: 1;
+    flex-shrink: 0;
+    display: flex; /* Usa flexbox para centralizar o ícone */
+    align-items: center;
+    justify-content: center;
+}
+
+#close-chat-button-header:hover {
+    color: #e9e9eb; /* Cor mais clara ao passar o mouse */
+}
+
+
+/* Ajuste para a seção do chatbot original dentro do wrapper */
+.chatbot-wrapper .chatbot-section {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden; /* Keep overflow hidden for the chat messages area */
+}
+
+/* Ajuste para o chat-container dentro do wrapper */
+.chatbot-wrapper .chat-container {
+    border: none;
+    border-radius: 0;
+    flex-grow: 1;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.chat-box {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #dcf8c6;
+    color: #333;
+}
+
+.model-message {
+    align-self: flex-start;
+    background-color: #e9e9eb;
+    color: #333;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    flex-shrink: 0;
+}
+
+.chat-input-area input[type="text"] {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    font-family: sans-serif;
+}
+
+.chat-input-area button {
+    width: auto;
+    padding: 8px 15px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-input-area button i {
+    margin: 0;
+}
+
+/* *** FIM: Estilos para o Chatbot *** */
+
+
+/* *** Media Query para ecrãs pequenos (até 900px de largura) *** */
+/* Aplicamos estes estilos para smartphones e a maioria dos notebooks */
+@media (max-width: 900px) {
     body {
         padding: 10px;
+        padding-bottom: 80px; /* Espaço para o botão flutuante */
     }
 
     .container {
@@ -192,7 +402,7 @@ button:hover {
     }
 
     .container img {
-         max-width: 200px; /* ajusta o tamanho do logo */
+         max-width: 200px;
     }
 
     .model-select-container {
@@ -210,14 +420,8 @@ button:hover {
          width: 100%;
      }
 
-    .model-select-container select {
-        min-width: unset;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
     .info-icon-container {
-         display: flex; /* Usa flexbox para alinhar o ícone e o tooltip */
+         display: flex;
          align-items: center;
          justify-content: center;
          width: 100%;
@@ -228,7 +432,7 @@ button:hover {
     }
 
     .tooltip {
-        position: absolute; 
+        position: absolute;
         bottom: auto;
         top: 100%;
         left: 50%;
@@ -242,60 +446,81 @@ button:hover {
 
     textarea {
         font-size: 0.9rem;
+        padding: 8px;
     }
 
     button {
         font-size: 1rem;
+        padding: 8px 12px;
     }
 
     #result-area {
         padding: 15px;
     }
 
-    .warning {
+    .warning p {
          padding: 10px;
          font-size: 0.85rem;
     }
-}
 
-/* *** Media Query para tablets (opcional) *** */
-@media (min-width: 601px) and (max-width: 900px) {
-    .container {
-        padding: 25px;
-        padding-top: 75px;
+    /* *** Estilos responsivos para os Botões Flutuantes *** */
+    .floating-chat-button {
+        bottom: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
     }
 
-    .container img {
-        max-width: 250px;
+    /* *** Estilos responsivos para o Wrapper do Chatbot *** */
+    .chatbot-wrapper {
+        /* Posicionamento e altura ajustados para mobile/notebooks */
+        bottom: 70px; /* Posição acima do botão flutuante */
+        top: auto; /* Deixa a altura ser determinada pelo max-height e bottom */
+        right: 10px; /* Distância da direita */
+        left: 10px; /* Distância da esquerda */
+        width: auto; /* Largura automática para ocupar o espaço entre left e right */
+        height: auto; /* Altura automática */
+        /* Ajustado max-height para deixar espaço no topo */
+        max-height: calc(100vh - 80px); /* Limita a altura (100vh - bottom - um pouco de margem no topo) */
+        transform: translateY(20px);
     }
 
-    .model-select-container {
-        top: 25px;
-        left: 25px;
+    .chatbot-wrapper.is-visible {
+         transform: translateY(0);
     }
 
-     .model-select-container select {
-         min-width: 180px;
-     }
-
-    .tooltip {
-         max-width: 350px;
-         margin-left: -175px;
+    .chatbot-header {
+        display: flex;
     }
 
-    textarea {
-         font-size: 0.9rem;
+    /* Ajuste para o chat-container dentro do wrapper */
+    .chat-container {
+        height: auto;
     }
 
-    button {
-         font-size: 1.05rem;
+    .chat-box {
+        padding: 10px;
+        /* Adicionado padding-top para compensar a falta do header */
+        padding-top: 15px;
     }
 
-     #result-area {
-         padding: 18px;
-     }
+    .message {
+        max-width: 90%;
+    }
 
-     .warning {
-         font-size: 0.88rem;
-     }
+    .chat-input-area {
+        padding: 8px;
+    }
+
+    .chat-input-area input[type="text"] {
+        margin-right: 8px;
+        font-size: 0.85rem;
+        padding: 6px;
+    }
+
+    .chat-input-area button {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
 }
