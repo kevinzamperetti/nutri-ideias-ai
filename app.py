@@ -24,6 +24,7 @@ app = Flask(__name__)
 
 # Palavras-chave para uma verificação básica de tópico de nutrição (em português e inglês)
 NUTRITION_KEYWORDS = [
+    'oi', 'olá', 'me ajude', 'ajuda', 'hi', 'hello',
     'refeição', 'refeições', 'café da manhã', 'almoço', 'jantar', 'lanche',
     'nutrição', 'nutricional', 'dieta', 'calorias', 'caloria', 'kcal', 'gordura',
     'proteína', 'carboidrato', 'vitaminas', 'minerais', 'ingredientes', 'prato',
