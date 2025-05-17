@@ -4,6 +4,12 @@
 
 Bem-vindo ao repositório do **Nutri Ideias AI**! Este projeto é uma aplicação web simples e inovadora que atua como o seu assistente de nutrição pessoal, impulsionado pela inteligência artificial de ponta do Google Gemini.
 
+## 🚀 Aceda à Aplicação Online
+
+O **Nutri Ideias AI** está disponível online através do seguinte endereço: https://nutri-ideias-ai.onrender.com/
+
+**Nota:** Esta aplicação está hospedada em um servidor gratuito, o que significa que o primeiro acesso após um período de inatividade pode levar alguns segundos até o servidor "acordar" 😴 e o site ficar disponível. ☺️
+
 ## 💡 Utilidade e Objetivo do Projeto
 
 O **Nutri Ideias AI** foi criado para simplificar a sua jornada nutricional. O objetivo principal é fornecer ideias criativas de refeições, sugestões de cardápio e análises nutricionais aproximadas de pratos, tudo baseado nas suas preferências e ingredientes disponíveis. Chega de indecisão na hora de planejar as suas refeições!
@@ -20,7 +26,7 @@ Este projeto destaca-se pela sua abordagem criativa e eficácia em fornecer info
 
 * **Foco no Objetivo do projeto e Idiomas:** Graças à lógica implementada no backend, a aplicação foca-se em responder apenas a questões relacionadas com nutrição e tenta responder no idioma em que a pergunta foi feita, proporcionando uma experiência mais direcionada e amigável. Atualmente os idiomas suportados são português (como idioma principal) e inglês.
 
-## 🚀 Configuração e Execução Local
+## ⚙️ Configuração e Execução Local
 
 Para ter o Nutri Ideias AI a correr na sua máquina local, siga os passos abaixo:
 
